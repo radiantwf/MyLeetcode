@@ -1,4 +1,10 @@
+import threading
+
+
 class DiningPhilosophers:
+    def __init__(self):
+        self.fork_conds = [threading.Condition() for i in range(5)]
+
     # call the functions directly to execute, for example, eat()
     def wantsToEat(self,
                    philosopher: int,
@@ -7,5 +13,10 @@ class DiningPhilosophers:
                    eat: 'Callable[[], None]',
                    putLeftFork: 'Callable[[], None]',
                    putRightFork: 'Callable[[], None]') -> None:
-        pass
-        
+
+        with self.fork_conds[philosopher], self.fork_conds[(philosopher + 1) % 5]:
+            pickLeftFork()
+            pickRightFork()
+            eat()
+            putLeftFork()
+            putRightFork()
