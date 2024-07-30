@@ -34,39 +34,3 @@ func nonSpecialCount(l int, r int) int {
 	countL := primesCounter[int(math.Sqrt(float64(l-1)))]
 	return r - l + 1 - (counterR - countL)
 }
-
-// map保存平方数，会导致超时
-// var primesPow2 map[int]bool
-
-// func init() {
-// 	max := int(math.Sqrt(math.Pow10(9)))
-// 	isPrime := make([]bool, max+1)
-// 	isPrime[2] = true
-// 	for i := 3; i <= max; i += 2 {
-// 		isPrime[i] = true
-// 	}
-// 	for i := 3; i <= max; i += 2 {
-// 		if isPrime[i] {
-// 			for j := i * i; j <= max; j += i {
-// 				isPrime[j] = false
-// 			}
-// 		}
-// 	}
-// 	primesPow2 = make(map[int]bool)
-// 	primesPow2[2*2] = true
-// 	for i := 3; i <= max; i += 2 {
-// 		if isPrime[i] {
-// 			primesPow2[i*i] = true
-// 		}
-// 	}
-// }
-
-// func nonSpecialCount(l int, r int) int {
-// 	count := 0
-// 	for i := l; i <= r; i++ {
-// 		if _, ok := primesPow2[i]; ok {
-// 			count++
-// 		}
-// 	}
-// 	return r - l + 1 - count
-// }
