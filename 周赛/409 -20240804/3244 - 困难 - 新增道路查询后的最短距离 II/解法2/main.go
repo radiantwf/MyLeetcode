@@ -15,39 +15,11 @@ func main() {
 // 解题思路
 // 所有查询中不会存在两个查询都满足 queries[i][0] < queries[j][0] < queries[i][1] < queries[j][1]
 // 得出道路不会有交叉
+// 有一个int64数组，每一个bit表示一个节点，把所有节点置1
+// 每次查询，把路径上的节点置0(路径首尾节点不变)，最后统计剩余的节点数
+// 剩余节点数-1就是最短距离
+
 func shortestDistanceAfterQueries(n int, queries [][]int) []int {
-	fa := make([]int, n-1)
-	for i := range fa {
-		fa[i] = i
-	}
-	// 非递归并查集
-	find := func(x int) int {
-		rt := x
-		for fa[rt] != rt {
-			rt = fa[rt]
-		}
-		for fa[x] != rt {
-			fa[x], x = rt, fa[x]
-		}
-		return rt
-	}
-
-	ans := make([]int, len(queries))
-	cnt := n - 1 // 并查集连通块个数
-	for qi, q := range queries {
-		l, r := q[0], q[1]-1
-		fr := find(r)
-		for i := find(l); i < r; i = find(i + 1) {
-			fa[i] = fr
-			cnt--
-		}
-		ans[qi] = cnt
-	}
-	return ans
-}
-
-func shortestDistanceAfterQueries2(n int, queries [][]int) []int {
-	// 3 <= n <= 500
 	nodeBits := make([]uint64, n/64+1)
 	// 每一位，表示一个节点，把所有节点置1
 	for i := range nodeBits {
